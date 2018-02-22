@@ -46,3 +46,39 @@ target_link_libraries(reboot
   crazyflie_cpp
   ${Boost_LIBRARIES}
 )
+
+# battery
+add_executable(battery
+  src/battery.cpp
+)
+target_link_libraries(battery
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
+
+# version
+add_executable(version
+  src/version.cpp
+)
+target_link_libraries(version
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
+
+# console
+add_executable(console
+  src/console.cpp
+)
+target_link_libraries(console
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
+
+# flash
+add_executable(flash
+  src/flash.cpp
+)
+target_link_libraries(flash
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
