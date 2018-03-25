@@ -38,6 +38,15 @@ target_link_libraries(listLogVariables
   ${Boost_LIBRARIES}
 )
 
+# listMemories
+add_executable(listMemories
+  src/listMemories.cpp
+)
+target_link_libraries(listMemories
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
+
 # reboot
 add_executable(reboot
   src/reboot.cpp
