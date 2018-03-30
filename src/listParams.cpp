@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     cf.requestParamToc();
 
      std::for_each(cf.paramsBegin(), cf.paramsEnd(),
-      [](const Crazyflie::ParamTocEntry& entry)
+      [cf](const Crazyflie::ParamTocEntry& entry)
       {
         std::cout << entry.group << "." << entry.name << " (";
         switch (entry.type) {
@@ -70,7 +70,32 @@ int main(int argc, char **argv)
         if (entry.readonly) {
           std::cout << ", readonly";
         }
-        std::cout << ")";
+        std::cout << ") value: ";
+
+        switch (entry.type) {
+        case Crazyflie::ParamTypeUint8:
+          std::cout << (int)cf.getParam<uint8_t>(entry.id);
+          break;
+        case Crazyflie::ParamTypeInt8:
+          std::cout << (int)cf.getParam<int8_t>(entry.id);
+          break;
+        case Crazyflie::ParamTypeUint16:
+          std::cout << cf.getParam<uint16_t>(entry.id);
+          break;
+        case Crazyflie::ParamTypeInt16:
+          std::cout << cf.getParam<int16_t>(entry.id);
+          break;
+        case Crazyflie::ParamTypeUint32:
+          std::cout << cf.getParam<uint32_t>(entry.id);
+          break;
+        case Crazyflie::ParamTypeInt32:
+          std::cout << cf.getParam<int32_t>(entry.id);
+          break;
+        case Crazyflie::ParamTypeFloat:
+          std::cout << cf.getParam<float>(entry.id);
+          break;
+        }
+
         std::cout << std::endl;
       }
     );
