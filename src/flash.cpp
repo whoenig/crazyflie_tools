@@ -90,6 +90,10 @@ int main(int argc, char **argv)
     }
 
     std::ifstream stream(fileName.c_str(), std::ios::binary);
+    if (!stream.good()) {
+      std::cerr << "Couldn't open " << fileName << "!" << std::endl;
+      return 1;
+    }
     std::vector<uint8_t> targetData((
       std::istreambuf_iterator<char>(stream)),
       (std::istreambuf_iterator<char>()));
