@@ -91,3 +91,12 @@ target_link_libraries(flash
   crazyflie_cpp
   ${Boost_LIBRARIES}
 )
+
+# comCheck
+add_executable(comCheck
+  src/comCheck.cpp
+)
+target_link_libraries(comCheck
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)

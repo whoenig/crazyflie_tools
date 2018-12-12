@@ -126,6 +126,15 @@ target_link_libraries(flash
   ${Boost_LIBRARIES}
 )
 
+### comCheck
+add_executable(comCheck
+  src/comCheck.cpp
+)
+target_link_libraries(comCheck
+  ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
+
 #############
 ## Install ##
 #############

@@ -6,8 +6,8 @@ This will be eventually used as submodule in crazyflie_ros.
 ## Build
 
 ```
-submodule init
-submodule update
+git submodule init
+git submodule update
 mkdir build
 cd build
 cmake ..
