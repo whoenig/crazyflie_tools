@@ -27,6 +27,7 @@ addons:
   apt:
     packages:
       - libusb-1.0-0-dev
+      - libboost-program-options-dev
 
 # additional mac dependencies
 before_install:
