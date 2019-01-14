@@ -14,7 +14,7 @@ struct log {
 
 volatile bool g_done = false;
 
-void onLogData(uint32_t time_in_ms, struct log* data)
+void onLogData(uint32_t /*time_in_ms*/, struct log* data)
 {
   // std::cout << data->pm_vbat << std::endl;
   std::cout << data->pm_extVbat << std::endl;

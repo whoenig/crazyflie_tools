@@ -1,8 +1,12 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(crazyflie_tools)
 
-# Enable C++11
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+# Enable C++11 and warnings
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+add_compile_options(-Wall -Wextra -Werror)
 
 find_package(Boost REQUIRED COMPONENTS program_options REQUIRED)
 add_subdirectory(crazyflie_cpp)
