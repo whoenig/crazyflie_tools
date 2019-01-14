@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <inttypes.h>
 
 #include <boost/program_options.hpp>
 #include <crazyflie_cpp/Crazyflie.h>
@@ -85,7 +86,7 @@ int main(int argc, char **argv)
       // std::cout << "...Done" << std::endl;
 
       char addr[17];
-      std::sprintf(addr, "%lx", address);
+      std::sprintf(addr, "%" SCNx64, address);
       defaultUri += "/" + std::string(addr);
     }
 
