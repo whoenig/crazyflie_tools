@@ -135,6 +135,15 @@ target_link_libraries(comCheck
   ${Boost_LIBRARIES}
 )
 
+### log
+add_executable(log
+  src/log.cpp
+)
+target_link_libraries(log
+  ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
+
 #############
 ## Install ##
 #############
