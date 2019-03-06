@@ -40,43 +40,47 @@ int main(int argc, char **argv)
   try
   {
     Crazyflie cf(uri);
-    cf.requestParamToc();
 
-    uint32_t revision0 = 0;
-    uint16_t revision1 = 0;
-    uint32_t revchanged0 = 0;
-    uint16_t revchanged1 = 0;
-    uint8_t modified = 1;
+    std::cout << "firmware version: " << cf.getFirmwareVersion() << std::endl;
+    std::cout << "protocol version: " << cf.getProtocolVersion() << std::endl;
 
-    const Crazyflie::ParamTocEntry* entry = cf.getParamTocEntry("firmware", "revision0");
-    if (entry) {
-      revision0 = cf.getParam<uint32_t>(entry->id);
-    }
+    // cf.requestParamToc();
 
-    entry = cf.getParamTocEntry("firmware", "revision1");
-    if (entry) {
-      revision1 = cf.getParam<uint16_t>(entry->id);
-    }
+    // uint32_t revision0 = 0;
+    // uint16_t revision1 = 0;
+    // uint32_t revchanged0 = 0;
+    // uint16_t revchanged1 = 0;
+    // uint8_t modified = 1;
 
-    entry = cf.getParamTocEntry("firmware", "modified");
-    if (entry) {
-      modified = cf.getParam<uint8_t>(entry->id);
-    }
+    // const Crazyflie::ParamTocEntry* entry = cf.getParamTocEntry("firmware", "revision0");
+    // if (entry) {
+    //   revision0 = cf.getParam<uint32_t>(entry->id);
+    // }
 
-    entry = cf.getParamTocEntry("firmware", "revchanged0");
-    if (entry) {
-      revchanged0 = cf.getParam<uint32_t>(entry->id);
-    }
+    // entry = cf.getParamTocEntry("firmware", "revision1");
+    // if (entry) {
+    //   revision1 = cf.getParam<uint16_t>(entry->id);
+    // }
 
-    entry = cf.getParamTocEntry("firmware", "revchanged1");
-    if (entry) {
-      revchanged1 = cf.getParam<uint16_t>(entry->id);
-    }
+    // entry = cf.getParamTocEntry("firmware", "modified");
+    // if (entry) {
+    //   modified = cf.getParam<uint8_t>(entry->id);
+    // }
 
-    uint64_t revision = ((uint64_t)revision0 << 16) | revision1;
-    uint64_t revChanged = ((uint64_t)revchanged0 << 16) | revchanged1;
+    // entry = cf.getParamTocEntry("firmware", "revchanged0");
+    // if (entry) {
+    //   revchanged0 = cf.getParam<uint32_t>(entry->id);
+    // }
 
-    std::cout << std::hex << revision << "," << (bool)modified << "," << revChanged << std::endl;
+    // entry = cf.getParamTocEntry("firmware", "revchanged1");
+    // if (entry) {
+    //   revchanged1 = cf.getParam<uint16_t>(entry->id);
+    // }
+
+    // uint64_t revision = ((uint64_t)revision0 << 16) | revision1;
+    // uint64_t revChanged = ((uint64_t)revchanged0 << 16) | revchanged1;
+
+    // std::cout << std::hex << revision << "," << (bool)modified << "," << revChanged << std::endl;
 
     return 0;
   }

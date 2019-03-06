@@ -34,16 +34,31 @@ uint64_t getTimestamp()
 uint32_t numPacketsReceived = 0;
 uint64_t sumRoundtripTime = 0;
 
+uint32_t linkQualitySent = 0;
+uint32_t linkQualityAcked = 0;
+
 void onGenericPacket(const ITransport::Ack& ack)
 {
   uint64_t time_since_epoch = getTimestamp();
 
   const crtpMyPacket* packet = reinterpret_cast<const crtpMyPacket*>(ack.data);
   uint64_t roundtripTime = time_since_epoch - packet->time_since_epoch;
-  std::cout << "packet!" << (int)ack.size << " " << packet->id << " " << roundtripTime << " ms" << std::endl;
+  // std::cout << "packet!" << (int)ack.size << " " << packet->id << " " << roundtripTime << " ms" << std::endl;
 
   sumRoundtripTime += roundtripTime;
   ++numPacketsReceived;
+}
+
+void onEmptyAck(const crtpPlatformRSSIAck* cb)
+{
+  std::cout << "RSSI: " << (int)cb->rssi << std::endl;
+}
+
+void onLinkQuality(float quality)
+{
+  linkQualitySent += 100;
+  linkQualityAcked += quality * 100;
+  // std::cout << "Link quality: " << quality << std::endl;
 }
 
 int main(int argc, char **argv)
@@ -84,6 +99,9 @@ int main(int argc, char **argv)
   {
     Crazyflie cf(uri);
 
+    cf.setEmptyAckCallback(onEmptyAck);
+    cf.setLinkQualityCallback(onLinkQuality);
+
     // send pings to clear queue
     for (size_t i = 0; i < 1000; ++i) {
       cf.sendPing();
@@ -113,9 +131,10 @@ int main(int argc, char **argv)
       cf.sendPing();
     }
 
-    std::cout << "numPacketsReceived: " << numPacketsReceived << std::endl;
+    std::cout << "numPacketsReceived: " << numPacketsReceived / (double)numPackets * 100.0f << " %" << std::endl;
     std::cout << "Avg. roundtrip time: " << sumRoundtripTime / (double) numPacketsReceived << " ms" << std::endl;
     std::cout << numPackets / (timeToSent / 1000.0f) << " packets/s sent" << std::endl;
+    std::cout << "link quality: " << linkQualityAcked / (float)linkQualitySent << std::endl;
 
 
     return 0;
