@@ -38,6 +38,26 @@ std::istream& operator>>(std::istream& in, Mode& mode)
   return in;
 }
 
+class MyLogger : public Logger
+{
+public:
+  MyLogger(bool verbose)
+    : m_verbose(verbose)
+  {
+  }
+
+  virtual void info(const std::string& msg)
+  {
+    if (m_verbose) {
+      std::cout << msg << std::endl;
+    }
+  }
+  // virtual void warning(const std::string& /*msg*/) {}
+  // virtual void error(const std::string& /*msg*/) {}
+private:
+  bool m_verbose;
+};
+
 int main(int argc, char **argv)
 {
 
@@ -46,6 +66,7 @@ int main(int argc, char **argv)
   std::string defaultUri("radio://0/0/2M");
   Crazyflie::BootloaderTarget target;
   Mode mode = FlashAndVerify;
+  bool verbose = false;
 
   namespace po = boost::program_options;
 
@@ -56,6 +77,7 @@ int main(int argc, char **argv)
     ("filename", po::value<std::string>(&fileName)->required(), "file to flash")
     ("uri", po::value<std::string>(&uri)->default_value(defaultUri), "unique ressource identifier")
     ("mode", po::value<Mode>(&mode)->default_value(mode), "mode {default=flashAndVerify, flashOnly, verifyOnly}")
+    ("verbose,v", "verbose output")
   ;
 
   try
@@ -68,6 +90,7 @@ int main(int argc, char **argv)
       std::cout << desc << "\n";
       return 0;
     }
+    verbose = vm.count("verbose");
   }
   catch(po::error& e)
   {
@@ -78,12 +101,14 @@ int main(int argc, char **argv)
 
   try
   {
+    MyLogger logger(verbose);
+
     bool success = true;
+    Crazyflie cf(uri, logger);
     if (uri != defaultUri) {
-      // std::cout << "Reboot to Bootloader...";
-      Crazyflie cf(uri);
+      logger.info("Reboot to Bootloader...");
       uint64_t address = cf.rebootToBootloader();
-      // std::cout << "...Done" << std::endl;
+      logger.info("...Done");
 
       char addr[17];
       std::sprintf(addr, "%" SCNx64, address);
@@ -99,28 +124,28 @@ int main(int argc, char **argv)
       std::istreambuf_iterator<char>(stream)),
       (std::istreambuf_iterator<char>()));
 
-    Crazyflie cf(defaultUri);
+    // Crazyflie cf(defaultUri, logger);
 
     if (mode == FlashAndVerify || mode == FlashOnly) {
-      // std::cout << "Flashing " << targetData.size() / 1024 << " kB" << std::endl;
+      logger.info("Flashing...");
       cf.writeFlash(target, targetData);
     }
     if (mode == FlashAndVerify || mode == VerifyOnly) {
-      // std::cout << "Reading " << targetData.size() / 1024 << " kB" << std::endl;
+      logger.info("Reading...");
       std::vector<uint8_t> currentData;
       cf.readFlash(target, targetData.size(), currentData);
       std::ofstream dbg("data.bin", std::ios::binary);
       dbg.write((char*)currentData.data(), currentData.size());
       if (memcmp(targetData.data(), currentData.data(), targetData.size()) == 0) {
-        // std::cout << "Verification successful!" << std::endl;
+        logger.info("Verification successful!");
       } else {
-        std::cout << "Verification NOT successful!" << std::endl;
+        std::cerr << "Verification NOT successful!" << std::endl;
         success = false;
       }
     }
 
-    // std::cout << "Reboot to firmware" << std::endl;
-    cf.reboot();
+    logger.info("Reboot to firmware");
+    cf.rebootFromBootloader();
 
     if (success) {
       return 0;
