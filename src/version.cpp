@@ -43,6 +43,7 @@ int main(int argc, char **argv)
 
     std::cout << "firmware version: " << cf.getFirmwareVersion() << std::endl;
     std::cout << "protocol version: " << cf.getProtocolVersion() << std::endl;
+    std::cout << "device type name: " << cf.getDeviceTypeName() << std::endl;
 
     // cf.requestParamToc();
 

@@ -44,8 +44,7 @@ int main(int argc, char **argv)
 
   try
   {
-    Crazyflie cf(uri);
-    cf.setConsoleCallback(onConsoleData);
+    Crazyflie cf(uri, EmptyLogger, onConsoleData);
     // cf.logReset();
     // cf.requestLogToc();
 
