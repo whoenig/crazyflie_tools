@@ -79,7 +79,9 @@ int main(int argc, char **argv)
             }
 
             if (defaultAddressStr != addressStr) {
-              std::cout << "/" << addressStr.substr(2);
+              std::stringstream sstr;
+              sstr << std::hex << std::uppercase << address;
+              std::cout << "/" << sstr.str();
             }
             std::cout << std::endl;
           }
