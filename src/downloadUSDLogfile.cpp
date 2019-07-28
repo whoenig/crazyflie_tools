@@ -8,6 +8,7 @@ int main(int argc, char **argv)
 
   std::string uri;
   std::string defaultUri("radio://0/80/2M/E7E7E7E7E7");
+  bool verbose = false;
 
   namespace po = boost::program_options;
 
@@ -15,6 +16,7 @@ int main(int argc, char **argv)
   desc.add_options()
     ("help", "produce help message")
     ("uri", po::value<std::string>(&uri)->default_value(defaultUri), "unique ressource identifier")
+    ("verbose,v", "verbose output")
   ;
 
   try
@@ -27,6 +29,7 @@ int main(int argc, char **argv)
       std::cout << desc << "\n";
       return 0;
     }
+    verbose = vm.count("verbose");
   }
   catch(po::error& e)
   {
@@ -60,8 +63,29 @@ int main(int argc, char **argv)
 
     cf.requestMemoryToc();
 
+    if (verbose) {
+      auto iter = cf.memoriesBegin();
+      const auto end = cf.memoriesEnd();
+      for (;iter != end; ++iter) {
+        if (iter->type == Crazyflie::MemoryTypeUSD) {
+          std::cout << "File is " << iter->size << " bytes." << std::endl;
+          break;
+        }
+      }
+    }
+
     std::vector<uint8_t> data;
+
+    auto start = std::chrono::high_resolution_clock::now();
     cf.readUSDLogFile(data);
+    auto end = std::chrono::high_resolution_clock::now();
+    
+    if (verbose) {
+      std::chrono::duration<double> duration = end-start;
+      double t = duration.count();
+
+      std::cout << "read " << data.size() << " in " << t << " s. (" << data.size() / t << " B/s)." << std::endl;
+    }
 
     std::cout << "read " << data.size() << std::endl;
 
