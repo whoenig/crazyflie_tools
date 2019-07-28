@@ -153,6 +153,15 @@ target_link_libraries(downloadUSDLogfile
   ${Boost_LIBRARIES}
 )
 
+# setParam
+add_executable(setParam
+  src/setParam.cpp
+)
+target_link_libraries(setParam
+  ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
+
 #############
 ## Install ##
 #############
