@@ -57,7 +57,7 @@ int main(int argc, char **argv)
         // return 1;
       }
     } else {
-      std::cerr << "Could not find USD deck logging variables!" << std::endl;
+      std::cerr << "Could not find USD deck logging variables! Are you using the latest firmware?" << std::endl;
       return 1;
     }
 
