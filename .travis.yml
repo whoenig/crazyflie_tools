@@ -29,9 +29,9 @@ addons:
       - libusb-1.0-0-dev
       - libboost-program-options-dev
 
-# additional mac dependencies
-before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install libusb; fi
+# # additional mac dependencies
+# before_install:
+#   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
+#   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install libusb; fi
 
 script: make
