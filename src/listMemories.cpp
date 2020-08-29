@@ -68,6 +68,9 @@ int main(int argc, char **argv)
       }
     );
 
+    std::vector<uint8_t> data;
+    cf.readMemory(0, data);
+
     return 0;
   }
   catch(std::exception& e)
