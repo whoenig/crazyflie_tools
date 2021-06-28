@@ -78,14 +78,14 @@ target_link_libraries(scan
 #   ${Boost_LIBRARIES}
 # )
 
-# # console
-# add_executable(console
-#   src/console.cpp
-# )
-# target_link_libraries(console
-#   crazyflie_cpp
-#   ${Boost_LIBRARIES}
-# )
+# console
+add_executable(console
+  src/console.cpp
+)
+target_link_libraries(console
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
 
 # # flash
 # add_executable(flash
