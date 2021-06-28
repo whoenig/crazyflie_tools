@@ -43,7 +43,7 @@ int main(int argc, char **argv)
     sstr << std::hex << addressStr;
     sstr >> address;
 
-    const auto uris = Crazyflie::scan();
+    const auto uris = Crazyflie::scan(address);
 
     for (const auto &uri : uris) {
       std::cout << uri << std::endl;
