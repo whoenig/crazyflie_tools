@@ -69,14 +69,14 @@ target_link_libraries(scan
 #   ${Boost_LIBRARIES}
 # )
 
-# # version
-# add_executable(version
-#   src/version.cpp
-# )
-# target_link_libraries(version
-#   crazyflie_cpp
-#   ${Boost_LIBRARIES}
-# )
+# version
+add_executable(version
+  src/version.cpp
+)
+target_link_libraries(version
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
 
 # console
 add_executable(console
