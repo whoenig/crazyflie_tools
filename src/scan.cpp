@@ -9,6 +9,7 @@ int main(int argc, char **argv)
 
   std::string addressStr;
   std::string defaultAddressStr("0xE7E7E7E7E7");
+  // bool verbose = false;
 
   namespace po = boost::program_options;
 
@@ -16,6 +17,7 @@ int main(int argc, char **argv)
   desc.add_options()
     ("help", "produce help message")
     ("address", po::value<std::string>(&addressStr)->default_value(defaultAddressStr), "device address")
+    // ("verbose,v", "verbose output")
   ;
 
   try
@@ -28,6 +30,7 @@ int main(int argc, char **argv)
       std::cout << desc << "\n";
       return 0;
     }
+    // verbose = vm.count("verbose");
   }
   catch(po::error& e)
   {

@@ -5,11 +5,14 @@
 #include <boost/program_options.hpp>
 #include <crazyflie_cpp/Crazyflie.h>
 
+#include "logger.hpp"
+
 int main(int argc, char **argv)
 {
 
   std::string uri;
   std::string defaultUri("radio://0/80/2M/E7E7E7E7E7");
+  bool verbose = false;
 
   namespace po = boost::program_options;
 
@@ -17,6 +20,7 @@ int main(int argc, char **argv)
   desc.add_options()
     ("help", "produce help message")
     ("uri", po::value<std::string>(&uri)->default_value(defaultUri), "unique ressource identifier")
+    ("verbose,v", "verbose output")
   ;
 
   try
@@ -29,6 +33,7 @@ int main(int argc, char **argv)
       std::cout << desc << "\n";
       return 0;
     }
+    verbose = vm.count("verbose");
   }
   catch(po::error& e)
   {
@@ -39,7 +44,8 @@ int main(int argc, char **argv)
 
   try
   {
-    Crazyflie cf(uri);
+    CrazyflieToolsLogger logger(verbose);
+    Crazyflie cf(uri, logger);
 
     std::cout << "firmware version: " << cf.getFirmwareVersion() << std::endl;
     std::cout << "protocol version: " << cf.getProtocolVersion() << std::endl;
