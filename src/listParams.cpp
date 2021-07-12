@@ -39,9 +39,9 @@ int main(int argc, char **argv)
   {
     Crazyflie cf(uri);
     cf.requestParamToc();
-
-     std::for_each(cf.paramsBegin(), cf.paramsEnd(),
-      [cf](const Crazyflie::ParamTocEntry& entry)
+    
+    std::for_each(cf.paramsBegin(), cf.paramsEnd(),
+      [&cf](const Crazyflie::ParamTocEntry& entry)
       {
         std::cout << entry.group << "." << entry.name << " (";
         switch (entry.type) {

@@ -24,14 +24,14 @@ target_link_libraries(scan
   ${Boost_LIBRARIES}
 )
 
-# # listParams
-# add_executable(listParams
-#   src/listParams.cpp
-# )
-# target_link_libraries(listParams
-#   crazyflie_cpp
-#   ${Boost_LIBRARIES}
-# )
+# listParams
+add_executable(listParams
+  src/listParams.cpp
+)
+target_link_libraries(listParams
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
 
 # # listLogVariables
 # add_executable(listLogVariables
