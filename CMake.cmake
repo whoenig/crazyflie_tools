@@ -33,14 +33,14 @@ target_link_libraries(listParams
   ${Boost_LIBRARIES}
 )
 
-# # listLogVariables
-# add_executable(listLogVariables
-#   src/listLogVariables.cpp
-# )
-# target_link_libraries(listLogVariables
-#   crazyflie_cpp
-#   ${Boost_LIBRARIES}
-# )
+# listLogVariables
+add_executable(listLogVariables
+  src/listLogVariables.cpp
+)
+target_link_libraries(listLogVariables
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
 
 # # listMemories
 # add_executable(listMemories
