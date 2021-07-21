@@ -3,6 +3,7 @@
 
 #include <boost/program_options.hpp>
 #include <crazyflie_cpp/Crazyflie.h>
+#include "logger.hpp"
 
 void onLogCustom(uint32_t time_in_ms, std::vector<double>* values, void* /*userData*/)
 {
@@ -20,6 +21,7 @@ int main(int argc, char **argv)
   std::string defaultUri("radio://0/80/2M/E7E7E7E7E7");
   std::vector<std::string> vars;
   uint32_t period;
+  bool verbose = false;
 
   namespace po = boost::program_options;
 
@@ -29,6 +31,7 @@ int main(int argc, char **argv)
     ("var", po::value<std::vector<std::string>>(&vars)->multitoken(), "variable names to log")
     ("period", po::value<uint32_t>(&period)->default_value(10), "sampling period in ms")
     ("uri", po::value<std::string>(&uri)->default_value(defaultUri), "unique ressource identifier")
+    ("verbose,v", "verbose output")
   ;
 
   try
@@ -41,6 +44,7 @@ int main(int argc, char **argv)
       std::cout << desc << "\n";
       return 0;
     }
+    verbose = vm.count("verbose");
   }
   catch(po::error& e)
   {
@@ -51,7 +55,8 @@ int main(int argc, char **argv)
 
   try
   {
-    Crazyflie cf(uri);
+    CrazyflieToolsLogger logger(verbose);
+    Crazyflie cf(uri, logger);
     cf.requestLogToc();
 
     std::function<void(uint32_t, std::vector<double>*, void*)> cb = std::bind(&onLogCustom, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);

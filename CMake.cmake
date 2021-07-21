@@ -106,14 +106,14 @@ target_link_libraries(console
 #   ${Boost_LIBRARIES}
 # )
 
-# # log
-# add_executable(log
-#   src/log.cpp
-# )
-# target_link_libraries(log
-#   crazyflie_cpp
-#   ${Boost_LIBRARIES}
-# )
+# log
+add_executable(log
+  src/log.cpp
+)
+target_link_libraries(log
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
 
 # # downloadUSDLogfile
 # add_executable(downloadUSDLogfile
