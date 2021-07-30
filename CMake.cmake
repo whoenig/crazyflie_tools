@@ -124,11 +124,11 @@ target_link_libraries(log
 #   ${Boost_LIBRARIES}
 # )
 
-# # setParam
-# add_executable(setParam
-#   src/setParam.cpp
-# )
-# target_link_libraries(setParam
-#   crazyflie_cpp
-#   ${Boost_LIBRARIES}
-# )
+# setParam
+add_executable(setParam
+  src/setParam.cpp
+)
+target_link_libraries(setParam
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)

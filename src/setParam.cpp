@@ -49,8 +49,8 @@ int main(int argc, char **argv)
     Crazyflie cf(uri);
 
     auto pos = parameter.find(".");
-    const char* group = parameter.substr(0, pos).c_str();
-    const char* name = parameter.substr(pos+1).c_str();
+    std::string group = parameter.substr(0, pos).c_str();
+    std::string name = parameter.substr(pos+1).c_str();
 
     if (vm.count("valUint8")) {
       cf.setParamByName<uint8_t>(group, name, (uint8_t)vm["valUint8"].as<int>());
