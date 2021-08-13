@@ -52,14 +52,14 @@ target_link_libraries(listMemories
   ${Boost_LIBRARIES}
 )
 
-# # reboot
-# add_executable(reboot
-#   src/reboot.cpp
-# )
-# target_link_libraries(reboot
-#   crazyflie_cpp
-#   ${Boost_LIBRARIES}
-# )
+# reboot
+add_executable(reboot
+  src/reboot.cpp
+)
+target_link_libraries(reboot
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
 
 # # battery
 # add_executable(battery

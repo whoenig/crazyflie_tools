@@ -6,7 +6,7 @@
 enum Mode
 {
   RebootToFirmware,
-  RebootToBootloader,
+  // RebootToBootloader,
   SysOff,
   SysOn,
   AllOff,
@@ -18,8 +18,8 @@ std::istream& operator>>(std::istream& in, Mode& mode)
   in >> token;
   if (token == "firmware")
     mode = RebootToFirmware;
-  else if (token == "bootloader")
-    mode = RebootToBootloader;
+  // else if (token == "bootloader")
+    // mode = RebootToBootloader;
   else if (token == "sysoff")
     mode = SysOff;
   else if (token == "syson")
@@ -43,7 +43,8 @@ int main(int argc, char **argv)
   desc.add_options()
     ("help", "produce help message")
     ("uri", po::value<std::string>(&uri)->default_value(defaultUri), "unique ressource identifier")
-    ("mode", po::value<Mode>(&mode)->default_value(mode), "reboot mode {firmware,bootloader,sysoff,syson,alloff}")
+    // ("mode", po::value<Mode>(&mode)->default_value(mode), "reboot mode {firmware,bootloader,sysoff,syson,alloff}")
+    ("mode", po::value<Mode>(&mode)->default_value(mode), "reboot mode {firmware,sysoff,syson,alloff}")
   ;
 
   try
@@ -72,9 +73,9 @@ int main(int argc, char **argv)
       case RebootToFirmware:
         cf.reboot();
         break;
-      case RebootToBootloader:
-        cf.rebootToBootloader();
-        break;
+      // case RebootToBootloader:
+      //   cf.rebootToBootloader();
+      //   break;
       case SysOff:
         cf.sysoff();
         break;
