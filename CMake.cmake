@@ -61,14 +61,14 @@ target_link_libraries(reboot
   ${Boost_LIBRARIES}
 )
 
-# # battery
-# add_executable(battery
-#   src/battery.cpp
-# )
-# target_link_libraries(battery
-#   crazyflie_cpp
-#   ${Boost_LIBRARIES}
-# )
+# battery
+add_executable(battery
+  src/battery.cpp
+)
+target_link_libraries(battery
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
 
 # version
 add_executable(version

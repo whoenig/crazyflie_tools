@@ -14,7 +14,7 @@ struct log {
 
 volatile bool g_done = false;
 
-void onLogData(uint32_t /*time_in_ms*/, struct log* data)
+void onLogData(uint32_t /*time_in_ms*/, const struct log* data)
 {
   // std::cout << data->pm_vbat << std::endl;
   std::cout << data->pm_extVbat << std::endl;
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
       cf.requestLogToc();
 
       std::unique_ptr<LogBlock<struct log> > logBlock;
-      std::function<void(uint32_t, struct log*)> cb = std::bind(&onLogData, std::placeholders::_1, std::placeholders::_2);
+      std::function<void(uint32_t, const struct log*)> cb = std::bind(&onLogData, std::placeholders::_1, std::placeholders::_2);
 
       logBlock.reset(new LogBlock<struct log>(
         &cf,{
