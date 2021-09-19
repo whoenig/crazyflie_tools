@@ -4,15 +4,19 @@ project(crazyflie_tools)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS
-  crazyflie_cpp
-)
+find_package(catkin)
 
-# Enable C++11
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+# Enable C++14 and warnings
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-## System dependencies are found with CMake's conventions
+# add_compile_options(-Wall -Wextra -Werror)
+add_compile_options(-Wall -Wextra)
+
 find_package(Boost REQUIRED COMPONENTS program_options REQUIRED)
+
+add_subdirectory(crazyflie_cpp)
 
 ###################################
 ## catkin specific configuration ##
@@ -26,9 +30,9 @@ find_package(Boost REQUIRED COMPONENTS program_options REQUIRED)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES crazyflie
-  CATKIN_DEPENDS
-    crazyflie_cpp
-#  DEPENDS system_lib
+#  CATKIN_DEPENDS
+#    crazyflie_cpp
+#  DEPENDS crazyflie_cpp crazyflieLinkCpp
 )
 
 ###########
@@ -36,122 +40,135 @@ catkin_package(
 ###########
 
 include_directories(
+  crazyflie_cpp/include
   ${catkin_INCLUDE_DIRS}
 )
 
-## Declare a cpp executable
+# scan
 add_executable(scan
   src/scan.cpp
 )
-
-## Specify libraries to link a library or executable target against
 target_link_libraries(scan
   ${catkin_LIBRARIES}
+  crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
-### listParams
+# listParams
 add_executable(listParams
   src/listParams.cpp
 )
 target_link_libraries(listParams
   ${catkin_LIBRARIES}
+  crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
-### listLogVariables
+# listLogVariables
 add_executable(listLogVariables
   src/listLogVariables.cpp
 )
 target_link_libraries(listLogVariables
   ${catkin_LIBRARIES}
+  crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
-### listMemories
+# listMemories
 add_executable(listMemories
   src/listMemories.cpp
 )
 target_link_libraries(listMemories
   ${catkin_LIBRARIES}
+  crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
-### reboot
+# reboot
 add_executable(reboot
   src/reboot.cpp
 )
 target_link_libraries(reboot
   ${catkin_LIBRARIES}
+  crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
-### battery
-
+# battery
 add_executable(battery
   src/battery.cpp
 )
 target_link_libraries(battery
   ${catkin_LIBRARIES}
+  crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
-### version
-
+# version
 add_executable(version
   src/version.cpp
 )
 target_link_libraries(version
   ${catkin_LIBRARIES}
+  crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
-### console
-
+# console
 add_executable(console
   src/console.cpp
 )
 target_link_libraries(console
   ${catkin_LIBRARIES}
+  crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
-### flash
+# ### flash
+# add_executable(flash
+#   src/flash.cpp
+# )
+# target_link_libraries(flash
+#   ${catkin_LIBRARIES}
+#   ${Boost_LIBRARIES}
+# )
 
-add_executable(flash
-  src/flash.cpp
-)
-target_link_libraries(flash
-  ${catkin_LIBRARIES}
-  ${Boost_LIBRARIES}
-)
+# ### comCheck
+# add_executable(comCheck
+#   src/comCheck.cpp
+# )
+# target_link_libraries(comCheck
+#   ${catkin_LIBRARIES}
+#   ${Boost_LIBRARIES}
+# )
 
-### comCheck
-add_executable(comCheck
-  src/comCheck.cpp
-)
-target_link_libraries(comCheck
-  ${catkin_LIBRARIES}
-  ${Boost_LIBRARIES}
-)
-
-### log
+# log
 add_executable(log
   src/log.cpp
 )
 target_link_libraries(log
   ${catkin_LIBRARIES}
+  crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
-# downloadUSDLogfile
-add_executable(downloadUSDLogfile
-  src/downloadUSDLogfile.cpp
-)
-target_link_libraries(downloadUSDLogfile
-  ${catkin_LIBRARIES}
-  ${Boost_LIBRARIES}
-)
+# # downloadUSDLogfile
+# add_executable(downloadUSDLogfile
+#   src/downloadUSDLogfile.cpp
+# )
+# target_link_libraries(downloadUSDLogfile
+#   ${catkin_LIBRARIES}
+#   ${Boost_LIBRARIES}
+# )
 
 # setParam
 add_executable(setParam
@@ -159,6 +176,8 @@ add_executable(setParam
 )
 target_link_libraries(setParam
   ${catkin_LIBRARIES}
+  crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
