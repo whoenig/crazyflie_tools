@@ -5,12 +5,12 @@
 #include <boost/program_options.hpp>
 #include <crazyflie_cpp/Crazyflie.h>
 
-struct log {
+PACK(struct log {
   float pm_vbat;
   float pm_extVbat;
   float pm_extCurr;
   // float chargeCurrent;
-} __attribute__((packed));
+});
 
 volatile bool g_done = false;
 
