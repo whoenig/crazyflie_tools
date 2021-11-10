@@ -10,11 +10,26 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra)
 endif()
 
-find_package(Boost REQUIRED COMPONENTS program_options REQUIRED)
+# Boost library handling
+set(Boost_USE_STATIC_LIBS OFF)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+unset(Boost_INCLUDE_DIR CACHE)
+unset(Boost_LIBRARY_DIRS CACHE)
+add_definitions(-DBOOST_ALL_NO_LIB) 
+add_definitions(-DBOOST_ALL_DYN_LINK) 
+
+find_package(Boost REQUIRED COMPONENTS program_options)
+
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+
+
 add_subdirectory(crazyflie_cpp)
 
 include_directories(
   crazyflie_cpp/include
+  ${Boost_INCLUDE_DIRS}
 )
 
 # scan
