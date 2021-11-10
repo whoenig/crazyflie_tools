@@ -10,26 +10,34 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra)
 endif()
 
-# Boost library handling
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-unset(Boost_INCLUDE_DIR CACHE)
-unset(Boost_LIBRARY_DIRS CACHE)
-add_definitions(-DBOOST_ALL_NO_LIB) 
-add_definitions(-DBOOST_ALL_DYN_LINK) 
+if (WIN32)
+  # Boost library handling
+  set(Boost_USE_STATIC_LIBS OFF)
+  set(Boost_USE_MULTITHREADED ON)
+  set(Boost_USE_STATIC_RUNTIME OFF)
+  unset(Boost_INCLUDE_DIR CACHE)
+  unset(Boost_LIBRARY_DIRS CACHE)
+  add_definitions(-DBOOST_ALL_NO_LIB)
+  add_definitions(-DBOOST_ALL_DYN_LINK)
+endif()
 
 find_package(Boost REQUIRED COMPONENTS program_options)
 
-INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
-LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+# Apple macOS libraries
+if (APPLE)
+  set(CMAKE_EXE_LINKER_FLAGS "-lobjc -framework IOKit -framework CoreFoundation")
+  set(CMAKE_MODULE_LINKER_FLAGS "-lobjc -framework IOKit -framework CoreFoundation")
+endif()
 
-
-add_subdirectory(crazyflie_cpp)
+add_subdirectory(crazyflie_cpp EXCLUDE_FROM_ALL)
 
 include_directories(
   crazyflie_cpp/include
   ${Boost_INCLUDE_DIRS}
+)
+
+link_directories(
+  ${Boost_LIBRARY_DIRS}
 )
 
 # scan
