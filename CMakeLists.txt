@@ -25,8 +25,8 @@ find_package(Boost REQUIRED COMPONENTS program_options)
 
 # Apple macOS libraries
 if (APPLE)
-  set(CMAKE_EXE_LINKER_FLAGS "-lobjc -framework IOKit -framework CoreFoundation")
-  set(CMAKE_MODULE_LINKER_FLAGS "-lobjc -framework IOKit -framework CoreFoundation")
+  set(CMAKE_EXE_LINKER_FLAGS "-lobjc -framework IOKit -framework CoreFoundation -framework Security")
+  set(CMAKE_MODULE_LINKER_FLAGS "-lobjc -framework IOKit -framework CoreFoundation -framework Security")
 endif()
 
 add_subdirectory(crazyflie_cpp EXCLUDE_FROM_ALL)
