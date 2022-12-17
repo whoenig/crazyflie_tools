@@ -5,10 +5,10 @@
 #include <crazyflie_cpp/Crazyflie.h>
 #include "logger.hpp"
 
-void onLogCustom(uint32_t time_in_ms, std::vector<double>* values, void* /*userData*/)
+void onLogCustom(uint32_t time_in_ms, const std::vector<float>* values, void* /*userData*/)
 {
   std::cout << time_in_ms;
-  for (double v : *values) {
+  for (const float v : *values) {
     std::cout << "," << v;
   }
   std::cout << std::endl;
@@ -59,7 +59,7 @@ int main(int argc, char **argv)
     Crazyflie cf(uri, logger);
     cf.requestLogToc();
 
-    std::function<void(uint32_t, std::vector<double>*, void*)> cb = std::bind(&onLogCustom, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    std::function<void(uint32_t, const std::vector<float>*, void*)> cb = std::bind(&onLogCustom, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     LogBlockGeneric logBlock(&cf, vars, nullptr, cb);
     logBlock.start(period / 10);
 
