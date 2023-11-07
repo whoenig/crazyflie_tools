@@ -121,14 +121,14 @@ target_link_libraries(console
 #   ${Boost_LIBRARIES}
 # )
 
-# # comCheck
-# add_executable(comCheck
-#   src/comCheck.cpp
-# )
-# target_link_libraries(comCheck
-#   crazyflie_cpp
-#   ${Boost_LIBRARIES}
-# )
+# comCheck
+add_executable(comCheck
+  src/comCheck.cpp
+)
+target_link_libraries(comCheck
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
 
 # log
 add_executable(log

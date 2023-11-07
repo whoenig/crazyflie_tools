@@ -3,6 +3,8 @@
 
 #include <boost/program_options.hpp>
 #include <crazyflie_cpp/Crazyflie.h>
+
+#if 0
 #include <crazyflie_cpp/crtp.h>
 
 struct crtpMyPacket
@@ -29,11 +31,11 @@ uint64_t getTimestamp()
   uint64_t time_since_epoch = value.count();
   return time_since_epoch;
 }
-
+#endif
 // stats
 uint32_t numPacketsReceived = 0;
 uint64_t sumRoundtripTime = 0;
-
+#if 0
 uint32_t linkQualitySent = 0;
 uint32_t linkQualityAcked = 0;
 
@@ -59,6 +61,14 @@ void onLinkQuality(float quality)
   linkQualitySent += 100;
   linkQualityAcked += quality * 100;
   // std::cout << "Link quality: " << quality << std::endl;
+}
+#endif
+
+void onLatency(uint64_t latency_in_us)
+{
+  sumRoundtripTime += latency_in_us;
+  ++numPacketsReceived;
+  // std::cout << numPacketsReceived << " " << latency_in_us << std::endl;
 }
 
 int main(int argc, char **argv)
@@ -99,6 +109,9 @@ int main(int argc, char **argv)
   {
     Crazyflie cf(uri);
 
+    cf.setLatencyCallback(onLatency);
+
+#if 0
     cf.setEmptyAckCallback(onEmptyAck);
     cf.setLinkQualityCallback(onLinkQuality);
 
@@ -130,11 +143,34 @@ int main(int argc, char **argv)
     for (size_t i = 0; i < 1000; ++i) {
       cf.sendPing();
     }
+    #endif
 
-    std::cout << "numPacketsReceived: " << numPacketsReceived / (double)numPackets * 100.0f << " %" << std::endl;
+    auto conStatsStart = cf.connectionStats();
+
+    auto start = std::chrono::steady_clock::now();
+
+    for (uint64_t id = 0; id < numPackets; ++id) {
+      cf.triggerLatencyMeasurement();
+      while (numPacketsReceived < id) {
+        cf.processAllPackets();
+      }
+    }
+
+    auto end = std::chrono::steady_clock::now();
+
+    auto conStatsEnd = cf.connectionStats();
+
+    size_t sent_count = conStatsEnd.sent_count - conStatsStart.sent_count;
+    // size_t receive_count = conStatsEnd.receive_count - conStatsStart.receive_count;
+    size_t ack_count = conStatsEnd.ack_count - conStatsStart.ack_count;
+
+    std::chrono::duration<double> elapsed = end - start;
+    double elapsed_seconds = elapsed.count();
+
+    // std::cout << "numPacketsReceived: " << numPacketsReceived / (double)numPackets * 100.0f << " %" << std::endl;
     std::cout << "Avg. roundtrip time: " << sumRoundtripTime / (double) numPacketsReceived << " ms" << std::endl;
-    std::cout << numPackets / (timeToSent / 1000.0f) << " packets/s sent" << std::endl;
-    std::cout << "link quality: " << linkQualityAcked / (float)linkQualitySent << std::endl;
+    std::cout << sent_count / elapsed_seconds << " packets/s sent" << std::endl;
+    std::cout << "link quality: " << ack_count / (float)sent_count << std::endl;
 
 
     return 0;
