@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include <boost/program_options.hpp>
 #include <crazyflie_cpp/Crazyflie.h>
@@ -6,6 +7,7 @@
 int main(int argc, char **argv)
 {
 
+  std::string outputfile;
   std::string uri;
   std::string defaultUri("radio://0/80/2M/E7E7E7E7E7");
   bool verbose = false;
@@ -15,6 +17,7 @@ int main(int argc, char **argv)
   po::options_description desc("Allowed options");
   desc.add_options()
     ("help", "produce help message")
+    ("output,o", po::value<std::string>(&outputfile)->required(), "path to output file")
     ("uri", po::value<std::string>(&uri)->default_value(defaultUri), "unique ressource identifier")
     ("verbose,v", "verbose output")
   ;
@@ -89,7 +92,7 @@ int main(int argc, char **argv)
 
     std::cout << "read " << data.size() << std::endl;
 
-    std::ofstream out("output.log", std::ios::binary);
+    std::ofstream out(outputfile, std::ios::binary);
     out.write(reinterpret_cast<const char*>(data.data()), data.size());
 
     return 0;

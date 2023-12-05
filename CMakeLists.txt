@@ -121,14 +121,14 @@ target_link_libraries(console
 #   ${Boost_LIBRARIES}
 # )
 
-# # comCheck
-# add_executable(comCheck
-#   src/comCheck.cpp
-# )
-# target_link_libraries(comCheck
-#   crazyflie_cpp
-#   ${Boost_LIBRARIES}
-# )
+# comCheck
+add_executable(comCheck
+  src/comCheck.cpp
+)
+target_link_libraries(comCheck
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
 
 # log
 add_executable(log
@@ -139,14 +139,14 @@ target_link_libraries(log
   ${Boost_LIBRARIES}
 )
 
-# # downloadUSDLogfile
-# add_executable(downloadUSDLogfile
-#   src/downloadUSDLogfile.cpp
-# )
-# target_link_libraries(downloadUSDLogfile
-#   crazyflie_cpp
-#   ${Boost_LIBRARIES}
-# )
+# downloadUSDLogfile
+add_executable(downloadUSDLogfile
+  src/downloadUSDLogfile.cpp
+)
+target_link_libraries(downloadUSDLogfile
+  crazyflie_cpp
+  ${Boost_LIBRARIES}
+)
 
 # setParam
 add_executable(setParam
