@@ -168,7 +168,7 @@ int main(int argc, char **argv)
     double elapsed_seconds = elapsed.count();
 
     // std::cout << "numPacketsReceived: " << numPacketsReceived / (double)numPackets * 100.0f << " %" << std::endl;
-    std::cout << "Avg. roundtrip time: " << sumRoundtripTime / (double) numPacketsReceived << " ms" << std::endl;
+    std::cout << "Avg. roundtrip time: " << sumRoundtripTime / (double) numPacketsReceived << " us" << std::endl;
     std::cout << sent_count / elapsed_seconds << " packets/s sent" << std::endl;
     std::cout << "link quality: " << ack_count / (float)sent_count << std::endl;
 
