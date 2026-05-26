@@ -46,6 +46,7 @@ add_executable(scan
 )
 target_link_libraries(scan
   crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
@@ -55,6 +56,7 @@ add_executable(listParams
 )
 target_link_libraries(listParams
   crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
@@ -64,6 +66,7 @@ add_executable(listLogVariables
 )
 target_link_libraries(listLogVariables
   crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
@@ -73,6 +76,7 @@ add_executable(listMemories
 )
 target_link_libraries(listMemories
   crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
@@ -82,6 +86,7 @@ add_executable(reboot
 )
 target_link_libraries(reboot
   crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
@@ -91,6 +96,7 @@ add_executable(battery
 )
 target_link_libraries(battery
   crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
@@ -100,6 +106,7 @@ add_executable(version
 )
 target_link_libraries(version
   crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
@@ -109,6 +116,7 @@ add_executable(console
 )
 target_link_libraries(console
   crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
@@ -118,6 +126,7 @@ target_link_libraries(console
 # )
 # target_link_libraries(flash
 #   crazyflie_cpp
+crazyflieLinkCpp
 #   ${Boost_LIBRARIES}
 # )
 
@@ -127,6 +136,7 @@ add_executable(comCheck
 )
 target_link_libraries(comCheck
   crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
@@ -136,6 +146,7 @@ add_executable(log
 )
 target_link_libraries(log
   crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
@@ -145,6 +156,7 @@ add_executable(downloadUSDLogfile
 )
 target_link_libraries(downloadUSDLogfile
   crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
 
@@ -154,5 +166,6 @@ add_executable(setParam
 )
 target_link_libraries(setParam
   crazyflie_cpp
+  crazyflieLinkCpp
   ${Boost_LIBRARIES}
 )
