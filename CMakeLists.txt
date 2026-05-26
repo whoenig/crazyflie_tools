@@ -126,7 +126,7 @@ target_link_libraries(console
 # )
 # target_link_libraries(flash
 #   crazyflie_cpp
-crazyflieLinkCpp
+#   crazyflieLinkCpp
 #   ${Boost_LIBRARIES}
 # )
 
