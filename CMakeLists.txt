@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(crazyflie_tools)
 
 # Enable C++14 and warnings
@@ -21,6 +21,10 @@ if (WIN32)
   add_definitions(-DBOOST_ALL_DYN_LINK)
 endif()
 
+# use the BoostConfig.cmake shipped with Boost instead of the removed FindBoost
+if(POLICY CMP0167)
+  cmake_policy(SET CMP0167 NEW)
+endif()
 find_package(Boost REQUIRED COMPONENTS program_options)
 
 # Apple macOS libraries
@@ -33,11 +37,6 @@ add_subdirectory(crazyflie_cpp EXCLUDE_FROM_ALL)
 
 include_directories(
   crazyflie_cpp/include
-  ${Boost_INCLUDE_DIRS}
-)
-
-link_directories(
-  ${Boost_LIBRARY_DIRS}
 )
 
 # scan
@@ -46,7 +45,7 @@ add_executable(scan
 )
 target_link_libraries(scan
   crazyflie_cpp
-  ${Boost_LIBRARIES}
+  Boost::program_options
 )
 
 # listParams
@@ -55,7 +54,7 @@ add_executable(listParams
 )
 target_link_libraries(listParams
   crazyflie_cpp
-  ${Boost_LIBRARIES}
+  Boost::program_options
 )
 
 # listLogVariables
@@ -64,7 +63,7 @@ add_executable(listLogVariables
 )
 target_link_libraries(listLogVariables
   crazyflie_cpp
-  ${Boost_LIBRARIES}
+  Boost::program_options
 )
 
 # listMemories
@@ -73,7 +72,7 @@ add_executable(listMemories
 )
 target_link_libraries(listMemories
   crazyflie_cpp
-  ${Boost_LIBRARIES}
+  Boost::program_options
 )
 
 # reboot
@@ -82,7 +81,7 @@ add_executable(reboot
 )
 target_link_libraries(reboot
   crazyflie_cpp
-  ${Boost_LIBRARIES}
+  Boost::program_options
 )
 
 # battery
@@ -91,7 +90,7 @@ add_executable(battery
 )
 target_link_libraries(battery
   crazyflie_cpp
-  ${Boost_LIBRARIES}
+  Boost::program_options
 )
 
 # version
@@ -100,7 +99,7 @@ add_executable(version
 )
 target_link_libraries(version
   crazyflie_cpp
-  ${Boost_LIBRARIES}
+  Boost::program_options
 )
 
 # console
@@ -109,7 +108,7 @@ add_executable(console
 )
 target_link_libraries(console
   crazyflie_cpp
-  ${Boost_LIBRARIES}
+  Boost::program_options
 )
 
 # # flash
@@ -118,7 +117,7 @@ target_link_libraries(console
 # )
 # target_link_libraries(flash
 #   crazyflie_cpp
-#   ${Boost_LIBRARIES}
+#   Boost::program_options
 # )
 
 # comCheck
@@ -127,7 +126,7 @@ add_executable(comCheck
 )
 target_link_libraries(comCheck
   crazyflie_cpp
-  ${Boost_LIBRARIES}
+  Boost::program_options
 )
 
 # log
@@ -136,7 +135,7 @@ add_executable(log
 )
 target_link_libraries(log
   crazyflie_cpp
-  ${Boost_LIBRARIES}
+  Boost::program_options
 )
 
 # downloadUSDLogfile
@@ -145,7 +144,7 @@ add_executable(downloadUSDLogfile
 )
 target_link_libraries(downloadUSDLogfile
   crazyflie_cpp
-  ${Boost_LIBRARIES}
+  Boost::program_options
 )
 
 # setParam
@@ -154,5 +153,5 @@ add_executable(setParam
 )
 target_link_libraries(setParam
   crazyflie_cpp
-  ${Boost_LIBRARIES}
+  Boost::program_options
 )
